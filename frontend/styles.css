@@ -1,0 +1,7 @@
+html {
+    background-color: #080808;
+}
+canvas {
+    background-color: rgb(202, 202, 202);
+    image-rendering: pixelated;
+}
