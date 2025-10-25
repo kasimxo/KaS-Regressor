@@ -1,7 +1,21 @@
 html {
-    background-color: #080808;
+    background-color: #edecec;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
 }
 canvas {
-    background-color: rgb(202, 202, 202);
-    image-rendering: pixelated;
+    /*box-shadow: 0 0 10px rgb(73, 73, 73);*/
+}
+.canvas-container {
+
+}
+.canvas-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
