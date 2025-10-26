@@ -79,10 +79,12 @@ async function CalculateRegression(){
     ClearCanvas()
     DrawPoints()
     try {
-        /*
+        console.log([...dataPoints])
+        let body = JSON.stringify([...dataPoints])
+        console.log("REQUEST BODY: ", body)
         const response = await fetch(API_URL, {
             method: 'POST',
-            body: JSON.stringify(dataPoints)
+            body: body
         })
 
         if(!response.ok) {
@@ -91,9 +93,10 @@ async function CalculateRegression(){
 
         const content = await response.json()
         console.log("Response: ", content)
-        */
-        let a = Math.random() * 3 - 1.5
-        let b = Math.random() * 200 + 100
+        let a = Number.parseFloat(content[0])
+        let b = Number.parseFloat(content[1])
+        //let a = Math.random() * 3 - 1.5
+        //let b = Math.random() * 200 + 100
         DrawLinearRegression([a, b]) // Simulate api response: y = ax + b -> a = 2, b = 55
     } catch (error) {
         console.error(error)
