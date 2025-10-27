@@ -86,7 +86,7 @@ async function CalculateRegression(){
     ClearCanvas()
     DrawPoints()
     try {
-        let body = JSON.stringify([...dataPoints])
+        let body = JSON.stringify([...dataPoints].map(pair=>pair.split(',').map(Number)))
         
         const response = await fetch(API_URL, {
             method: 'POST',
