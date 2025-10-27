@@ -10,5 +10,5 @@ def regressor_view(request):
     #print(request.body)
     body = json.loads(request.body.decode("utf-8"))
     linear_regression = Calculate_linear_regression(body)
-    print(linear_regression)
+    #print(linear_regression)
     return HttpResponse(f"{linear_regression}", content_type="text/plain")

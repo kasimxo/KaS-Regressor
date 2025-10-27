@@ -13,7 +13,7 @@ function InitPage(){
 }
 
 function AddListeners(){
-    document.getElementById("canvas").addEventListener('click', (e)=>DrawPoint(e.offsetX, e.offsetY));
+    document.getElementById("canvas").addEventListener('click', (e)=>HandlePoint(e));
     document.getElementById("reset-canvas-button").addEventListener('click', (e)=>ResetCanvas())
     document.getElementById("calculate-regression-button").addEventListener('click', (e)=>CalculateRegression())
 }
@@ -51,9 +51,17 @@ function DrawGridLines(){
 
 function DrawPoints(){
     dataPoints.values().forEach(point=>{
-        let [x, y] = point.split(',')
+        let [x, y] = point.split(',').map(Number)
+        y = CANVAS_HEIGHT-y
         DrawPoint(x, y)
     })
+}
+
+function HandlePoint(e){    
+    let x = e.offsetX
+    let y = e.offsetY
+    dataPoints.add(`${x},${CANVAS_HEIGHT-y}`)
+    DrawPoint(x, y)
 }
 
 function DrawPoint(x, y){
@@ -61,7 +69,6 @@ function DrawPoint(x, y){
     ctx.arc(x, y, 5, 0, Math.PI * 2, true);
     ctx.fill()
     ctx.closePath()
-    dataPoints.add(`${x},${y}`)
 }
 
 function ResetCanvas(){
@@ -95,9 +102,7 @@ async function CalculateRegression(){
         console.log("Response: ", content)
         let a = Number.parseFloat(content[0])
         let b = Number.parseFloat(content[1])
-        //let a = Math.random() * 3 - 1.5
-        //let b = Math.random() * 200 + 100
-        DrawLinearRegression([a, b]) // Simulate api response: y = ax + b -> a = 2, b = 55
+        DrawLinearRegression([a, b]) 
     } catch (error) {
         console.error(error)
     }
@@ -106,8 +111,12 @@ async function CalculateRegression(){
 function DrawLinearRegression([a, b]){
     ctx.beginPath();
     ctx.strokeStyle = "red";
-    ctx.moveTo(0, CANVAS_HEIGHT - GRID_MARGINS - b)
-    ctx.lineTo(CANVAS_WIDTH, CANVAS_HEIGHT - GRID_MARGINS - b - a * CANVAS_WIDTH);
+    let x1 = 0
+    let y1 = a+CANVAS_HEIGHT+GRID_MARGINS
+    ctx.moveTo(x1, y1 )
+    let x2 = CANVAS_WIDTH
+    let y2 = a - b *(x2)+CANVAS_HEIGHT-GRID_MARGINS
+    ctx.lineTo(x2, y2 );
     ctx.stroke();
     ctx.closePath()
 }
