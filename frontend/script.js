@@ -86,9 +86,8 @@ async function CalculateRegression(){
     ClearCanvas()
     DrawPoints()
     try {
-        console.log([...dataPoints])
         let body = JSON.stringify([...dataPoints])
-        console.log("REQUEST BODY: ", body)
+        
         const response = await fetch(API_URL, {
             method: 'POST',
             body: body
@@ -98,10 +97,9 @@ async function CalculateRegression(){
             throw new Error(response)
         }
 
-        const content = await response.json()
-        console.log("Response: ", content)
-        let a = Number.parseFloat(content[0])
-        let b = Number.parseFloat(content[1])
+        const [responseA, responseB] = await response.json()
+        let a = Number.parseFloat(responseA)
+        let b = Number.parseFloat(responseB)
         DrawLinearRegression([a, b]) 
     } catch (error) {
         console.error(error)
@@ -112,10 +110,10 @@ function DrawLinearRegression([a, b]){
     ctx.beginPath();
     ctx.strokeStyle = "red";
     let x1 = 0
-    let y1 = a+CANVAS_HEIGHT+GRID_MARGINS
+    let y1 = CANVAS_HEIGHT - a
     ctx.moveTo(x1, y1 )
     let x2 = CANVAS_WIDTH
-    let y2 = a - b *(x2)+CANVAS_HEIGHT-GRID_MARGINS
+    let y2 = CANVAS_HEIGHT - b * (x2) - a
     ctx.lineTo(x2, y2 );
     ctx.stroke();
     ctx.closePath()
