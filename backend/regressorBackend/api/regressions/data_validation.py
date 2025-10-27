@@ -1,4 +1,4 @@
-def Validate_data(request):
+def validate_data(request):
     
     if not isinstance(request, list):
         raise ValueError("El contenido de la petición no cumple con el formato correcto")

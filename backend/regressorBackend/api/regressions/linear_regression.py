@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-def Calculate_linear_regression(dataPoints):
+def calculate_linear_regression(dataPoints):
     """
     Calculates the parameters (a, b) of a linear regression:
     y = a + bx
@@ -9,7 +9,7 @@ def Calculate_linear_regression(dataPoints):
     dataPoints: array of points for the linear regression
     """
     DATA_LENGTH = len(dataPoints)
-    
+
     if DATA_LENGTH == 1:
         return [dataPoints[0][1], 0]
 
@@ -27,6 +27,10 @@ def Calculate_linear_regression(dataPoints):
     squared_error_calculated = distances[:, 0] ** 2
     squared_error_sum = np.sum(squared_error_calculated)
 
+    if squared_error_sum == 0:
+        raise ValueError("No se pudo calcular una regresión válida")
+
+    # Calculate final coefficients
     b_value = distance_product_sum/squared_error_sum
     a_value = avgY - b_value*avgX
 
