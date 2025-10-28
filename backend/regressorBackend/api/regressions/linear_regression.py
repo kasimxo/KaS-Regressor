@@ -1,10 +1,7 @@
-import numpy as np
-import random
-
 def calculate_linear_regression(dataPoints):
     """
-    Calculates the parameters (a, b) of a linear regression:
-    y = a + bx
+    Calculates the parameters a (intercept), b (slope) of a linear regression:
+    <br>y = a + bx
 
     dataPoints: array of points for the linear regression
     """
@@ -13,25 +10,26 @@ def calculate_linear_regression(dataPoints):
     if DATA_LENGTH == 1:
         return [dataPoints[0][1], 0]
 
-    # Calculate avg
-    arr = np.array(dataPoints)
-    avgX, avgY = np.mean(arr, axis=0)
+    x_values, y_values = zip(*dataPoints)
 
-    # Avg distance
-    distances = arr - np.array([avgX, avgY])
+    # Calculate mean
+    mean_x = calculate_mean(x_values)
+    mean_y = calculate_mean(y_values)
 
-    distance_product_calculated = np.prod(distances, 1)
-    distance_product_sum = np.sum(distance_product_calculated)
+    # Covariance numerator
+    covariance_sum = sum((x_value-mean_x) * (y_value-mean_y) for x_value, y_value in dataPoints)
+    
+    # Variance denominator
+    variance_sum = sum((x_value-mean_x) ** 2 for x_value, _ in dataPoints)
 
-    # Calculate squared error
-    squared_error_calculated = distances[:, 0] ** 2
-    squared_error_sum = np.sum(squared_error_calculated)
-
-    if squared_error_sum == 0:
+    if variance_sum == 0:
         raise ValueError("No se pudo calcular una regresión válida")
 
     # Calculate final coefficients
-    b_value = distance_product_sum/squared_error_sum
-    a_value = avgY - b_value*avgX
+    b_value = covariance_sum / variance_sum 
+    a_value = mean_y - b_value * mean_x
 
-    return [round(a_value.item(), 5), round(b_value.item(), 5)]
+    return [round(a_value, 5), round(b_value, 5)]
+
+def calculate_mean(arr):
+    return sum(arr) / len(arr)

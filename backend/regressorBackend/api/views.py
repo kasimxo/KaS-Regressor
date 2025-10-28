@@ -11,6 +11,7 @@ def regressor_view(request):
     body = json.loads(request.body.decode("utf-8"))
     try:
         data = validate_data(body)
+        print("data validated", data)
         linear_regression = calculate_linear_regression(data)
         return HttpResponse(f"{linear_regression}", content_type="text/plain")
     except Exception as ex:
