@@ -1,8 +1,9 @@
-def calculate_linear_regression(dataPoints):
+import math
+def calculate_logarithmic_regression(dataPoints):
     """
-    Calculates the parameters a (intercept), b (slope) of a linear regression:
+    Calculates the parameters a (intercept), b (slope) of a logarithmic regression:
     
-    y = a + bx
+    y = a + b* ln(x)
 
     dataPoints: array of points for the linear regression
     """
@@ -13,22 +14,27 @@ def calculate_linear_regression(dataPoints):
 
     x_values, y_values = zip(*dataPoints)
 
+    # Calculate log value of x
+    x_log_values = [math.log(x) for x in x_values] # x > 0 or Error
+
     # Calculate mean
-    mean_x = calculate_mean(x_values)
+    mean_log_x = calculate_mean(x_log_values)
     mean_y = calculate_mean(y_values)
 
+
+
     # Covariance numerator
-    covariance_sum = sum((x_value-mean_x) * (y_value-mean_y) for x_value, y_value in dataPoints)
+    covariance_sum = sum((x_log_value-mean_log_x) * (y_value-mean_y) for x_log_value, y_value in zip(x_log_values, y_values))
     
     # Variance denominator
-    variance_sum = sum((x_value-mean_x) ** 2 for x_value, _ in dataPoints)
+    variance_sum = sum((x_log_value-mean_log_x) ** 2 for x_log_value in x_log_values)
 
     if variance_sum == 0:
         raise ValueError("No se pudo calcular una regresión válida")
 
     # Calculate final coefficients
     b_value = covariance_sum / variance_sum 
-    a_value = mean_y - b_value * mean_x
+    a_value = mean_y - b_value * mean_log_x
 
     return [round(a_value, 5), round(b_value, 5)]
 

@@ -3,6 +3,7 @@ const CANVAS_WIDTH = 400
 const CANVAS_HEIGHT = 400
 const GRID_LINES_SPACE = 25
 const GRID_MARGINS = 25
+const DRAW_INTERVAL = 5
 
 let ctx;
 let dataPoints = new Set()
@@ -100,10 +101,26 @@ async function CalculateRegression(){
         const [responseA, responseB] = await response.json()
         let a = Number.parseFloat(responseA)
         let b = Number.parseFloat(responseB)
-        DrawLinearRegression([a, b]) 
+        //DrawLinearRegression([a, b]) 
+        DrawLogarithmicRegression([a, b])
     } catch (error) {
         console.error(error)
     }
+}
+
+function DrawLogarithmicRegression([a, b]){
+    ctx.beginPath();
+    ctx.strokeStyle = "green";
+    let x1 = 0
+    let y1 = CANVAS_HEIGHT - a
+    ctx.moveTo(x1, y1 )
+
+    for(let x2 = DRAW_INTERVAL; x2 <= CANVAS_WIDTH; x2 += DRAW_INTERVAL){
+        let y2 = CANVAS_HEIGHT - b * (Math.log(x2)) - a
+        ctx.lineTo(x2, y2 );
+    }
+    ctx.stroke();
+    ctx.closePath()
 }
 
 function DrawLinearRegression([a, b]){
