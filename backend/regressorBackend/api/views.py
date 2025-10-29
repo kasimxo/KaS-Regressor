@@ -12,8 +12,8 @@ def regressor_view(request):
     body = json.loads(request.body.decode("utf-8"))
     try:
         data = validate_data(body)
-        #linear_regression = calculate_linear_regression(data)
+        linear_regression = calculate_linear_regression(data)
         logarithmic_regression = calculate_logarithmic_regression(data)
-        return HttpResponse(f"{logarithmic_regression}", content_type="text/plain")
+        return HttpResponse(f"{{\"linear_regression\":{linear_regression},\"logarithmic_regression\":{logarithmic_regression}}}", content_type="text/plain")
     except Exception as ex:
         return HttpResponse(str(ex), status=400)

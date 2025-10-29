@@ -66,6 +66,7 @@ function HandlePoint(e){
 }
 
 function DrawPoint(x, y){
+    ctx.beginPath();
     ctx.fillStyle = 'blue';
     ctx.arc(x, y, 5, 0, Math.PI * 2, true);
     ctx.fill()
@@ -98,11 +99,14 @@ async function CalculateRegression(){
             throw new Error(response)
         }
 
-        const [responseA, responseB] = await response.json()
-        let a = Number.parseFloat(responseA)
-        let b = Number.parseFloat(responseB)
-        //DrawLinearRegression([a, b]) 
-        DrawLogarithmicRegression([a, b])
+        const data = await response.json()
+        console.log("DATA: ", data)
+        if(data.linear_regression !== undefined){
+            DrawLinearRegression(data.linear_regression)
+        }
+        if(data.logarithmic_regression !== undefined) {
+            DrawLogarithmicRegression(data.logarithmic_regression)
+        }
     } catch (error) {
         console.error(error)
     }
@@ -111,11 +115,8 @@ async function CalculateRegression(){
 function DrawLogarithmicRegression([a, b]){
     ctx.beginPath();
     ctx.strokeStyle = "green";
-    let x1 = 0
-    let y1 = CANVAS_HEIGHT - a
-    ctx.moveTo(x1, y1 )
-
-    for(let x2 = DRAW_INTERVAL; x2 <= CANVAS_WIDTH; x2 += DRAW_INTERVAL){
+    ctx.moveTo(0, CANVAS_HEIGHT - a )
+    for(let x2 = 0; x2 <= CANVAS_WIDTH; x2 += DRAW_INTERVAL){
         let y2 = CANVAS_HEIGHT - b * (Math.log(x2)) - a
         ctx.lineTo(x2, y2 );
     }
