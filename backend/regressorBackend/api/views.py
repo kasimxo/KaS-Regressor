@@ -4,6 +4,7 @@ from django.views.decorators.http import require_GET, require_POST
 import json
 from .regressions.linear_regression import calculate_linear_regression
 from .regressions.logarithmic_regression import calculate_logarithmic_regression
+from .regressions.cuadratic_regression import calculate_cuadratic_regression
 from .regressions.data_validation import validate_data
 
 @csrf_exempt
@@ -14,6 +15,7 @@ def regressor_view(request):
         data = validate_data(body)
         linear_regression = calculate_linear_regression(data)
         logarithmic_regression = calculate_logarithmic_regression(data)
-        return HttpResponse(f"{{\"linear_regression\":{linear_regression},\"logarithmic_regression\":{logarithmic_regression}}}", content_type="text/plain")
+        cuadratic_regression = calculate_cuadratic_regression(data)
+        return HttpResponse(f"{{\"linear_regression\":{linear_regression},\"logarithmic_regression\":{logarithmic_regression},\"cuadratic_regression\":{cuadratic_regression}}}", content_type="text/plain")
     except Exception as ex:
         return HttpResponse(str(ex), status=400)

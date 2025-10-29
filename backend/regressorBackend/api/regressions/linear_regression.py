@@ -2,7 +2,7 @@ def calculate_linear_regression(dataPoints):
     """
     Calculates the parameters a (intercept), b (slope) of a linear regression:
     
-    y = a + bx
+    y = a + b * x
 
     dataPoints: array of points for the linear regression
     """

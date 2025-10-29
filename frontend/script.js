@@ -107,9 +107,24 @@ async function CalculateRegression(){
         if(data.logarithmic_regression !== undefined) {
             DrawLogarithmicRegression(data.logarithmic_regression)
         }
+        if(data.cuadratic_regression !== undefined) {
+            DrawCuadraticRegression(data.cuadratic_regression)
+        }
     } catch (error) {
         console.error(error)
     }
+}
+
+function DrawCuadraticRegression([a, b]){
+    ctx.beginPath();
+    ctx.strokeStyle = "orange";
+    ctx.moveTo(0, CANVAS_HEIGHT - a )
+    for(let x2 = 0; x2 <= CANVAS_WIDTH; x2 += DRAW_INTERVAL){
+        let y2 = CANVAS_HEIGHT - b * (Math.pow(x2, 2)) - a
+        ctx.lineTo(x2, y2 );
+    }
+    ctx.stroke();
+    ctx.closePath()
 }
 
 function DrawLogarithmicRegression([a, b]){
