@@ -110,9 +110,24 @@ async function CalculateRegression(){
         if(data.cuadratic_regression !== undefined) {
             DrawCuadraticRegression(data.cuadratic_regression)
         }
+        if(data.exponential_regression !== undefined) {
+            DrawExponentialRegression(data.exponential_regression)
+        }
     } catch (error) {
         console.error(error)
     }
+}
+
+function DrawExponentialRegression([a, b]){
+    ctx.beginPath();
+    ctx.strokeStyle = "purple";
+    ctx.moveTo(0, CANVAS_HEIGHT - a )
+    for(let x2 = 0; x2 <= CANVAS_WIDTH; x2 += DRAW_INTERVAL){
+        let y2 = CANVAS_HEIGHT - Math.pow(Math.E, b * x2) - a
+        ctx.lineTo(x2, y2 );
+    }
+    ctx.stroke();
+    ctx.closePath()
 }
 
 function DrawCuadraticRegression([a, b]){
