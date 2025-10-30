@@ -19,12 +19,15 @@ El servidor utiliza python con Django, recibe un array de datos sobre el que apl
 POST /regressor
 
 Request body: 
+
 [[x0, y0], ..., [xn, yn]]
 
 En el cuerpo de la petición se envía un array de puntos, donde cada punto es un array x, y.
+
 X e Y deben ser enteros positivos.
 
 Response body:
+
 {
     "linear_regression": [a, b],
     "exponential_regression": [a, b],
@@ -37,6 +40,9 @@ El cuerpo de la respuesta es un JSON con los distintos parámetros de cada una d
 Las fórmulas de cada una de las regresiones son las siguientes:
 
 Regresión lineal: y = a + b * x
+
 Regresión exponencial: y = a + e ^ (b * x)
+
 Regresión cuadrática: y = a + b * x ^ 2
+
 Regresión logarítmica: y = a + b * log(x)
