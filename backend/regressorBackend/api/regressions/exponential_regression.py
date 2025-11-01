@@ -1,3 +1,4 @@
+from utils import calculate_mean, calculate_r2
 import math
 
 def calculate_exponential_regression(dataPoints):
@@ -37,6 +38,3 @@ def calculate_exponential_regression(dataPoints):
     a_value = math.exp(a_value)
     
     return [round(a_value, 5), round(b_value, 5)]
-
-def calculate_mean(arr):
-    return sum(arr) / len(arr)

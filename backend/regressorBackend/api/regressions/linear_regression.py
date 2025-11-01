@@ -1,3 +1,5 @@
+from utils import calculate_mean, calculate_r2
+
 def calculate_linear_regression(dataPoints):
     """
     Calculates the parameters a (intercept), b (slope) of a linear regression:
@@ -30,7 +32,12 @@ def calculate_linear_regression(dataPoints):
     b_value = covariance_sum / variance_sum 
     a_value = mean_y - b_value * mean_x
 
-    return [round(a_value, 5), round(b_value, 5)]
+    # Predict y values
+    y_predicted = [ a_value + b_value * x_value for x_value in x_values]
 
-def calculate_mean(arr):
-    return sum(arr) / len(arr)
+    # Calculate r2 
+    r2 = calculate_r2(y_values, y_predicted)
+
+    print("r2 value is:", r2)
+
+    return [round(a_value, 5), round(b_value, 5)]

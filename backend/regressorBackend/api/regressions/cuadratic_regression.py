@@ -1,4 +1,6 @@
+from utils import calculate_mean, calculate_r2
 import math
+
 def calculate_cuadratic_regression(dataPoints):
     """
     Calculates the parameters a (intercept), b (slope) of a cuadratic regression:
@@ -35,6 +37,3 @@ def calculate_cuadratic_regression(dataPoints):
     a_value = mean_y - b_value * mean_cuadratic_x
 
     return [round(a_value, 5), round(b_value, 5)]
-
-def calculate_mean(arr):
-    return sum(arr) / len(arr)

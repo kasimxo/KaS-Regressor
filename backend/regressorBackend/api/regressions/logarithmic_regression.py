@@ -1,4 +1,6 @@
+from utils import calculate_mean
 import math
+
 def calculate_logarithmic_regression(dataPoints):
     """
     Calculates the parameters a (intercept), b (slope) of a logarithmic regression:
@@ -35,6 +37,3 @@ def calculate_logarithmic_regression(dataPoints):
     a_value = mean_y - b_value * mean_log_x
 
     return [round(a_value, 5), round(b_value, 5)]
-
-def calculate_mean(arr):
-    return sum(arr) / len(arr)
