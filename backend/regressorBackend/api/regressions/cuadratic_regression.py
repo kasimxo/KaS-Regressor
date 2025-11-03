@@ -36,4 +36,12 @@ def calculate_cuadratic_regression(dataPoints):
     b_value = covariance_sum / variance_sum 
     a_value = mean_y - b_value * mean_cuadratic_x
 
+    # Predict y values
+    y_predicted = [ a_value + b_value * (x_value ** 2) for x_value in x_values]
+
+    # Calculate r2 
+    r2 = calculate_r2(y_values, y_predicted)
+
+    print("r2 value is:", r2)
+
     return [round(a_value, 5), round(b_value, 5)]

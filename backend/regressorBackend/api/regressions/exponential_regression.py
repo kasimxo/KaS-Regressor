@@ -36,5 +36,13 @@ def calculate_exponential_regression(dataPoints):
     b_value = covariance_sum / variance_sum 
     a_value = mean_log_y - b_value * mean_x
     a_value = math.exp(a_value)
+
+    # Predict y values
+    y_predicted = [ a_value + math.exp(b_value * x_value) for x_value in x_values]
+
+    # Calculate r2 
+    r2 = calculate_r2(y_values, y_predicted)
+
+    print("r2 value is:", r2)
     
     return [round(a_value, 5), round(b_value, 5)]
