@@ -44,4 +44,4 @@ def calculate_logarithmic_regression(dataPoints):
 
     print("r2 value is:", r2)
 
-    return [round(a_value, 5), round(b_value, 5)]
+    return {"params":[round(a_value, 5), round(b_value, 5)],"r2":r2}
